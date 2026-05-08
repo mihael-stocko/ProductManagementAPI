@@ -1,0 +1,59 @@
+###
+GET http://localhost:5211/api/products
+
+###
+GET http://localhost:5211/api/products/1
+
+###
+POST http://localhost:5211/api/products
+Content-Type: application/json
+
+{
+    "name": "iPhone",
+    "categoryId": 1,
+    "price": 1000,
+    "stockQuantity": 500,
+    "isActive": true 
+}
+
+###
+PUT http://localhost:5211/api/products/2
+Content-Type: application/json
+
+{
+    "name": "jacket",
+    "categoryId": 2,
+    "price": 100,
+    "stockQuantity": 5000,
+    "isActive": false
+}
+
+###
+DELETE http://localhost:5211/api/products/1
+
+###
+GET http://localhost:5211/api/categories
+
+###
+GET http://localhost:5211/api/categories/3
+
+###
+POST http://localhost:5211/api/categories
+Content-Type: application/json
+
+{
+    "name": "Food",
+    "description": "Edible stuff"
+}
+
+###
+PUT http://localhost:5211/api/categories/4
+Content-Type: application/json
+
+{
+    "name": "Pets",
+    "description": "Cats, dogs, hamsters, pterodactyls..."
+}
+
+###
+DELETE http://localhost:5211/api/categories/3
