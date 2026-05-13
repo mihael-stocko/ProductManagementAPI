@@ -13,7 +13,7 @@ public class ProductService(ApplicationDbContext context) : IProductService
         bool? isActive, bool? inStock, 
         string? sortBy, int page, int pageSize)
     {
-        var query = context.Products.Include(p => p.Category).AsQueryable();
+        var query = context.Products.Include(p => p.Category).AsNoTracking().AsQueryable();
 
         //Filtering
         if(categoryId.HasValue) query = query.Where(p => p.CategoryId == categoryId);
@@ -43,7 +43,7 @@ public class ProductService(ApplicationDbContext context) : IProductService
 
     public async Task<ProductDto?> GetProductByIdAsync(int id)
     {
-        var product = await context.Products.Include(p => p.Category).FirstOrDefaultAsync(p => p.Id == id);
+        var product = await context.Products.Include(p => p.Category).AsNoTracking().FirstOrDefaultAsync(p => p.Id == id);
                
         return product == null ? null : new ProductDto(product.Id, product.Name, product.Category!.Name, product.Price, product.StockQuantity, product.IsActive, product.CreatedAt);
     }
@@ -93,7 +93,7 @@ public class ProductService(ApplicationDbContext context) : IProductService
 
     public async Task<List<CategoryDto>> GetCategoriesAsync(string? searchTerm, string? sortBy, int page, int pageSize)
     {
-        var query = context.Categories.AsQueryable();
+        var query = context.Categories.AsNoTracking().AsQueryable();
 
         //Filtering
         if(!string.IsNullOrWhiteSpace(searchTerm))
@@ -121,7 +121,7 @@ public class ProductService(ApplicationDbContext context) : IProductService
 
     public async Task<CategoryDto?> GetCategoryByIdAsync(int id)
     {
-        var category = await context.Categories.FindAsync(id);
+        var category = await context.Categories.AsNoTracking().FirstOrDefaultAsync(c => c.Id == id);
         return category == null ? null : new CategoryDto(category.Id, category.Name, category.Description);
     }
 
